@@ -31,7 +31,7 @@ const Home = () => {
     }
   };
 
-  console.log('Movies', movies);
+  // console.log('Movies', movies);
 
   const searchMovies = async (query) => {
     if (query.length > 0) {
@@ -106,7 +106,7 @@ const Home = () => {
       </section>
 
       <div
-        className=" container mx-auto px-4 py-8 ">
+        className="container mx-auto px-4 py-8 ">
         <h1 className="text-3xl font-bold mb-8 text-rose-600">Popular Movies</h1>
         <InfiniteScroll
           dataLength={query ? searchResults.length : movies.length}
@@ -115,7 +115,10 @@ const Home = () => {
           // loader={<h4>Loading...</h4>}
           endMessage={<p>No more movies to load</p>}
         >
-          <div className=" grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+          <div
+            className=" w-full grid grid-cols-1 lg:grid-cols-5 md:grid-cols-4 justify-items-center justify-center gap-y-20 gap-x-4 mt-10 mb-5"
+          // className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4"
+          >
             {(query ? searchResults : movies).map((movie, i) => (
               <MovieCart key={i} movie={movie} />
 
