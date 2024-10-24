@@ -1,101 +1,150 @@
-import Image from "next/image";
+"use client"
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import MovieCart from './Components/MovieCart/MovieCart';
+import ResponsivePagination from 'react-responsive-pagination';
+import { Pagination } from './Utilities/Pagination';
+// import 'react-responsive-pagination/themes/classic.css';
 
-export default function Home() {
+
+
+const Home = () => {
+  const [movies, setMovies] = useState([]);
+  const [page, setPage] = useState(1);
+  const [totalPage, setTotalPages] = useState()
+  const [hasMore, setHasMore] = useState(true);
+  const [query, setQuery] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
+
+  const fetchMovies = async () => {
+    const res = await axios.get(
+      // `https://api.themoviedb.org/3/movie/popular?api_key=f58ec701aa208fa84515ba18cdba1613`
+      `https://api.themoviedb.org/3/movie/popular?api_key=f58ec701aa208fa84515ba18cdba1613&page=${page}`
+    );
+    // setMovies((prevMovies) => [...prevMovies, ...res.data.results]);
+    setTotalPages(res?.data?.total_pages);
+    console.log('res?.data?.total_pages', res?.data?.total_results);
+    setMovies(res.data.results);
+    if (res?.data?.page >= res?.data?.total_pages) {
+      setHasMore(false);
+    }
+  };
+
+  console.log('Movies', movies);
+
+  const searchMovies = async (query) => {
+    if (query.length > 0) {
+      const res = await axios.get(
+        `https://api.themoviedb.org/3/search/movie?api_key=f58ec701aa208fa84515ba18cdba1613&query=${query}`
+      );
+      setSearchResults(res?.data?.results);
+    } else {
+      setSearchResults([]);
+    }
+  };
+
+  useEffect(() => {
+    if (!query) {
+      fetchMovies();
+    }
+  }, [page, query]);
+
+  const handleSearch = (e) => {
+    setQuery(e.target.value);
+    searchMovies(e.target.value);
+  };
+
+  function handlePageChange(page) {
+    setPage(page);
+  }
+
+  // const [pageNumber, setPageNumber] = useState(0)
+  // const page = 5 // Adjust the page numbers the way you want
+  // const updatePageNumber = (num) => {
+  //   if ((num > (totalPage - 1)) || (0 > num)) { return setPageNumber(0) }
+  //   setPageNumber(num)
+  // }
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.js
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <>
+      <section className="w-full">
+        <div
+          className="w-full h-[70vh] bg-cover bg-no-repeat bg-center flex flex-col justify-center items-center"
+          style={{
+            backgroundImage:
+              "url('https://analyticsindiamag.com/wp-content/uploads/2019/05/apps.55787.9007199266246365.687a10a8-4c4a-4a47-8ec5-a95f70d8852d.jpg')",
+          }}
+        >
+          <div>
+            <h1 className="text-white text-center xl:text-5xl lg:text-4xl md:text-3xl sm:text-2xl xs:text-xl font-semibold bg-gray-800 p-2 bg-opacity-40 rounded-sm">
+              Download the perfect netflix pictures
+            </h1>
+          </div>
+          <div className="w-full mx-auto">
+            <form>
+              <div className="xl:w-1/2 lg:w-[60%] md:w-[70%] sm:w-[70%] xs:w-[90%] mx-auto flex gap-2 md:mt-6 xs:mt-4 ">
+                {/* <input
+                  type="text"
+                  className="border border-gray-400 w-full p-2 rounded-md text-xl pl-2"
+                  placeholder="Search for homes..."
+                /> */}
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+                <input
+                  type="search"
+                  // type="text"
+                  value={query}
+                  onChange={handleSearch}
+                  placeholder="Search for movies..."
+                  className="mb-8 p-2 border border-gray-300 rounded w-full"
+                />
+
+              </div>
+            </form>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+      </section>
+
+      <div
+        className=" container mx-auto px-4 py-8 ">
+        <h1 className="text-3xl font-bold mb-8 text-rose-600">Popular Movies</h1>
+        <InfiniteScroll
+          dataLength={query ? searchResults.length : movies.length}
+          next={() => setPage((prevPage) => prevPage + 1)}
+          hasMore={hasMore}
+          // loader={<h4>Loading...</h4>}
+          endMessage={<p>No more movies to load</p>}
         >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+          <div className=" grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+            {(query ? searchResults : movies).map((movie, i) => (
+              <MovieCart key={i} movie={movie} />
+
+            ))}
+          </div>
+        </InfiniteScroll>
+      </div>
+
+
+      <div className='my-5 container mx-auto'>
+
+        {/* manual */}
+        {/* <Pagination
+        setPageNumber={setPage}
+        updatePageNumber={updatePageNumber}
+        pageNumber={page}
+        page={totalPage}
+
+      /> */}
+
+        {/* react pagination */}
+        <ResponsivePagination
+          current={page}
+          total={totalPage}
+          onPageChange={(page) => handlePageChange(page)}
+        />
+      </div>
+    </>
   );
-}
+};
+
+export default Home;
