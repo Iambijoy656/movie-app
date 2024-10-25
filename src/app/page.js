@@ -12,20 +12,22 @@ import { Pagination } from './Utilities/Pagination';
 const Home = () => {
   const [movies, setMovies] = useState([]);
   const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(true);
   const [totalPage, setTotalPages] = useState()
   const [hasMore, setHasMore] = useState(true);
   const [query, setQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
 
   const fetchMovies = async () => {
+    setLoading(true);
     const res = await axios.get(
       // `https://api.themoviedb.org/3/movie/popular?api_key=f58ec701aa208fa84515ba18cdba1613`
       `https://api.themoviedb.org/3/movie/popular?api_key=f58ec701aa208fa84515ba18cdba1613&page=${page}`
     );
     // setMovies((prevMovies) => [...prevMovies, ...res.data.results]);
     setTotalPages(res?.data?.total_pages);
-    console.log('res?.data?.total_pages', res?.data?.total_results);
-    setMovies(res.data.results);
+    setMovies(res?.data?.results);
+    setLoading(false);
     if (res?.data?.page >= res?.data?.total_pages) {
       setHasMore(false);
     }
@@ -45,10 +47,23 @@ const Home = () => {
   };
 
   useEffect(() => {
-    if (!query) {
-      fetchMovies();
+    if (typeof window !== 'undefined') {
+      if (!query) {
+        fetchMovies();
+      }
     }
   }, [page, query]);
+
+
+  // useEffect(() => {
+  //   if (!query) {
+  //     fetchMovies();
+  //   }
+  // }, [page, query]);
+
+  if (loading && movies.length === 0) {
+    return <div>Loading...</div>;
+  }
 
   const handleSearch = (e) => {
     setQuery(e.target.value);
@@ -59,12 +74,6 @@ const Home = () => {
     setPage(page);
   }
 
-  // const [pageNumber, setPageNumber] = useState(0)
-  // const page = 5 // Adjust the page numbers the way you want
-  // const updatePageNumber = (num) => {
-  //   if ((num > (totalPage - 1)) || (0 > num)) { return setPageNumber(0) }
-  //   setPageNumber(num)
-  // }
 
   return (
     <>

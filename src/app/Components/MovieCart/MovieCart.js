@@ -5,7 +5,6 @@ import React from 'react';
 import { CiHeart } from "react-icons/ci";
 
 const MovieCart = ({ movie }) => {
-    console.log(movie);
     return (
         <>
 
