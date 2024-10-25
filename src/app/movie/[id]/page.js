@@ -5,7 +5,7 @@ import { addToWatchList, removeFromWatchList, getWatchList } from '@/app/actions
 import WatchListButtons from '@/app/Components/WatchlistButtons/WatchlistButtons';
 
 const MovieDetails = async ({ params }) => {
-    const { id } = params;
+    const id = await params?.id;
 
     // Fetch movie details, credits, and recommendations concurrently
     const [movieRes, creditsRes, recommendationsRes] = await Promise.all([
@@ -36,26 +36,6 @@ const MovieDetails = async ({ params }) => {
 
     // Get top 5 cast members
     const cast = credits.cast.slice(0, 5);
-
-
-
-
-
-
-
-    // =---------------------
-
-
-    // const handleAddToWatchList = async () => {
-    //     await addToWatchList(movie);
-    // };
-
-    // const handleRemoveFromWatchList = async () => {
-    //     await removeFromWatchList(movie.id);
-    // };
-
-    // 
-
 
 
 
@@ -114,17 +94,8 @@ const MovieDetails = async ({ params }) => {
                                 </div>
                             </div>
                             <div className="flex -mx-2 my-4">
-                                {/* Watchlist Buttons */}
                                 <WatchListButtons movie={movie} />
 
-                                {/* <div className="w-1/2 px-2">
-                                    <button onClick={handleAddToWatchList} className="w-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white py-2 px-4 rounded-full font-bold hover:bg-gray-300 dark:hover:bg-gray-600">
-                                        Add to Wishlist
-                                    </button>
-                                    <button onClick={handleRemoveFromWatchList} className="w-full bg-gray-200 dark:bg-gray-500 text-red-800 dark:text-white py-2 px-4 rounded-full font-bold hover:bg-gray-300 dark:hover:bg-gray-600">
-                                        Remove to Wishlist
-                                    </button>
-                                </div> */}
                             </div>
                         </div>
                     </div>
