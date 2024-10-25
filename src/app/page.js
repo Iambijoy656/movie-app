@@ -4,8 +4,6 @@ import axios from 'axios';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import MovieCart from './Components/MovieCart/MovieCart';
 import ResponsivePagination from 'react-responsive-pagination';
-import { Pagination } from './Utilities/Pagination';
-// import 'react-responsive-pagination/themes/classic.css';
 
 
 

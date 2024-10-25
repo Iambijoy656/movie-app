@@ -1,6 +1,8 @@
 import React from 'react';
 import Image from 'next/image';
 import MovieCart from '@/app/Components/MovieCart/MovieCart';
+import { addToWatchList, removeFromWatchList, getWatchList } from '@/app/actions/watchlistActions';
+import WatchListButtons from '@/app/Components/WatchlistButtons/WatchlistButtons';
 
 const MovieDetails = async ({ params }) => {
     const { id } = params;
@@ -34,6 +36,29 @@ const MovieDetails = async ({ params }) => {
 
     // Get top 5 cast members
     const cast = credits.cast.slice(0, 5);
+
+
+
+
+
+
+
+    // =---------------------
+
+
+    // const handleAddToWatchList = async () => {
+    //     await addToWatchList(movie);
+    // };
+
+    // const handleRemoveFromWatchList = async () => {
+    //     await removeFromWatchList(movie.id);
+    // };
+
+    // 
+
+
+
+
 
     return (
         <>
@@ -89,11 +114,17 @@ const MovieDetails = async ({ params }) => {
                                 </div>
                             </div>
                             <div className="flex -mx-2 my-4">
-                                <div className="w-1/2 px-2">
-                                    <button className="w-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white py-2 px-4 rounded-full font-bold hover:bg-gray-300 dark:hover:bg-gray-600">
+                                {/* Watchlist Buttons */}
+                                <WatchListButtons movie={movie} />
+
+                                {/* <div className="w-1/2 px-2">
+                                    <button onClick={handleAddToWatchList} className="w-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white py-2 px-4 rounded-full font-bold hover:bg-gray-300 dark:hover:bg-gray-600">
                                         Add to Wishlist
                                     </button>
-                                </div>
+                                    <button onClick={handleRemoveFromWatchList} className="w-full bg-gray-200 dark:bg-gray-500 text-red-800 dark:text-white py-2 px-4 rounded-full font-bold hover:bg-gray-300 dark:hover:bg-gray-600">
+                                        Remove to Wishlist
+                                    </button>
+                                </div> */}
                             </div>
                         </div>
                     </div>
