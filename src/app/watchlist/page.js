@@ -12,7 +12,7 @@ const WatchList = () => {
         loadWatchList();
     }, [loadWatchList]);
 
-    console.log(watchList);
+
 
 
     return (

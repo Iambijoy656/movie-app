@@ -25,11 +25,19 @@ const useWatchListStore = create((set, get) => ({
         localStorage.setItem('watchList', watchList);
     },
 
+    // loadWatchList: () => {
+    //     if (typeof window !== "undefined") { // Ensures client-only access
+    //         const savedWatchList = JSON.parse(localStorage.getItem('watchlist')) || [];
+    //         set({ watchList: savedWatchList });
+    //     }
+    // },
 
     loadWatchList: () => {
-        const storedList = localStorage.getItem('watchList');
-        if (storedList) {
-            set({ watchList: JSON.parse(storedList) });
+        if (typeof window !== "undefined") {
+            const storedList = localStorage.getItem('watchList');
+            if (storedList) {
+                set({ watchList: JSON.parse(storedList) });
+            }
         }
     },
 }));
