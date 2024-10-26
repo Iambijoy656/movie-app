@@ -4,6 +4,7 @@ import axios from 'axios';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import MovieCart from './Components/MovieCart/MovieCart';
 import ResponsivePagination from 'react-responsive-pagination';
+import Loading from './loading';
 
 
 
@@ -31,7 +32,7 @@ const Home = () => {
     }
   };
 
-  // console.log('Movies', movies);
+
 
   const searchMovies = async (query) => {
     if (query.length > 0) {
@@ -53,14 +54,8 @@ const Home = () => {
   }, [page, query]);
 
 
-  // useEffect(() => {
-  //   if (!query) {
-  //     fetchMovies();
-  //   }
-  // }, [page, query]);
-
-  if (loading && movies.length === 0) {
-    return <div>Loading...</div>;
+  if (loading && movies?.length === 0) {
+    return <div><Loading /></div>;
   }
 
   const handleSearch = (e) => {
@@ -68,13 +63,13 @@ const Home = () => {
     searchMovies(e.target.value);
   };
 
-  function handlePageChange(page) {
+  const handlePageChange = (page) => {
     setPage(page);
   }
 
 
   return (
-    <>
+    <div suppressHydrationWarning>
       <section className="w-full">
         <div
           className="w-full h-[70vh] bg-cover bg-no-repeat bg-center flex flex-col justify-center items-center"
@@ -91,15 +86,8 @@ const Home = () => {
           <div className="w-full mx-auto">
             <form>
               <div className="xl:w-1/2 lg:w-[60%] md:w-[70%] sm:w-[70%] xs:w-[90%] mx-auto flex gap-2 md:mt-6 xs:mt-4 ">
-                {/* <input
-                  type="text"
-                  className="border border-gray-400 w-full p-2 rounded-md text-xl pl-2"
-                  placeholder="Search for homes..."
-                /> */}
-
                 <input
                   type="search"
-                  // type="text"
                   value={query}
                   onChange={handleSearch}
                   placeholder="Search for movies..."
@@ -153,7 +141,7 @@ const Home = () => {
           onPageChange={(page) => handlePageChange(page)}
         />
       </div>
-    </>
+    </div>
   );
 };
 

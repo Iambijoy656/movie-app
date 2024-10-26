@@ -3,6 +3,9 @@ import localFont from "next/font/local";
 import "./globals.css";
 import Footer from "./Shared/Footer";
 import "react-responsive-pagination/themes/classic.css";
+import Navbar from "./Shared/Navbar";
+import { Suspense } from "react";
+import Loading from "./loading";
 
 
 const geistSans = localFont({
@@ -27,6 +30,8 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <Suspense fallback={<Loading />}></Suspense>
+        <Navbar />
         {children}
         <Footer />
       </body>
