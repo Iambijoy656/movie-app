@@ -1,7 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
 import MovieCart from '@/app/Components/MovieCart/MovieCart';
-import { addToWatchList, removeFromWatchList, getWatchList } from '@/app/actions/watchlistActions';
 import WatchListButtons from '@/app/Components/WatchlistButtons/WatchlistButtons';
 
 const MovieDetails = async ({ params }) => {
