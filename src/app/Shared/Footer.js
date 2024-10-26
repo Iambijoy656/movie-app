@@ -15,15 +15,13 @@ const Footer = () => {
                                 <Link href="/">
                                     <div className="flex items-center space-x-2 text-2xl font-medium">
                                         <span>
-                                            {/* <img src="https://www.svgrepo.com/show/452102/slack.svg" alt="AI Logo"
-                                                width="64" height="64" className="w-16"> */}
                                             <Image
                                                 src="https://www.svgrepo.com/show/452102/slack.svg"
                                                 alt="AI Logo"
-                                                width={50} // Desired width
-                                                height={50} // Desired height
-                                                loading="lazy" // Lazy load for better performance
-                                                className="w-12 h-12" // Tailwind classes to enforce size
+                                                width={50}
+                                                height={50}
+                                                loading="lazy"
+                                                className="w-12 h-12"
                                             />
                                         </span>
                                         <span className="text-white">Movie App</span>

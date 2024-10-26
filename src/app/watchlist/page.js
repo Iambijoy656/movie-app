@@ -8,7 +8,6 @@ import useWatchListStore from '../store/store';
 const WatchList = () => {
     const { watchList, removeMovie, loadWatchList } = useWatchListStore();
 
-    // Load the watchList on initial render
     useEffect(() => {
         loadWatchList();
     }, [loadWatchList]);

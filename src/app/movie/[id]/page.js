@@ -7,7 +7,7 @@ import { movieSchema, recommendationsSchema } from '@/app/schemas/movieSchema';
 const MovieDetails = async ({ params }) => {
     const id = await params?.id;
 
-    // Fetch movie details, credits, and recommendations concurrently
+
     const [movieRes, creditsRes, recommendationsRes] = await Promise.all([
         fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=f58ec701aa208fa84515ba18cdba1613`, {
             cache: "force-cache",
