@@ -12,6 +12,8 @@ const WatchList = () => {
         loadWatchList();
     }, [loadWatchList]);
 
+    console.log(watchList);
+
 
     return (
         <>
@@ -35,7 +37,7 @@ const WatchList = () => {
             <div className="container mx-auto py-10">
                 {watchList?.length === 0 ? (
                     <div className=' h-[50vh] text-gray-200  px-4 py-4 md:py-6 md:p-6 xl:p-8 w-full'>
-                        <p className="text-lg md:text-xl  font-semibold leading-6 xl:leading-5 text-gray-800">You watch List is Empty</p>
+                        <p className="text-lg md:text-xl  font-semibold leading-6 xl:leading-5 text-gray-400">You watch List is Empty</p>
                     </div>
                 ) : (
                     <div className='flex flex-col justify-start items-start   px-4 py-4 md:py-6 md:p-6 xl:p-8 w-full'>

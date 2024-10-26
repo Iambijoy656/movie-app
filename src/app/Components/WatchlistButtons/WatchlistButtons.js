@@ -17,6 +17,9 @@ const WatchListButton = ({ movie }) => {
 
     const isInWatchList = watchList.some((m) => m.id === movie.id);
 
+    console.log(isInWatchList, '-----------');
+    console.log('watchList,-----', watchList,);
+
     return (
         <div className="flex space-x-4">
             {isInWatchList ? (
